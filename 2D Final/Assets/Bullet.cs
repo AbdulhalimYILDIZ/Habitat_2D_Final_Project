@@ -2,18 +2,27 @@
 
 public class Bullet : MonoBehaviour
 {
+    Manager manager;
     public int damageAmount = 1; // Hasar miktarı
     public float bulletSpeed;
     private float disableTimer; // Devre dışı bırakma süresi için sayaç
-
-    public void onCall()
+    private void Start()
+    {
+        manager = GameObject.FindWithTag("Manager").GetComponent<Manager>();
+    }
+    public void onCall(Transform startPos)
     {
         // Her etkinleştirildiğinde devre dışı bırakma süresini sıfırla
+        gameObject.GetComponent<Renderer>().enabled=false;
         ResetDisableTimer();
+        transform.position = startPos.position;
+        gameObject.GetComponent<Renderer>().enabled = true;
+
     }
 
     void Update()
     {
+
         // Mermi hareketi
         Vector3 bulletDirection = transform.up;
         Vector3 newPosition = transform.position + bulletDirection * bulletSpeed * Time.deltaTime;
@@ -32,10 +41,10 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Çarpışan objenin "enemy" tag'ine sahip olup olmadığını kontrol et
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("enemy"))
         {
             // Düşmana hasar ver
-            Manager manager = GameObject.FindWithTag("Manager").GetComponent<Manager>();
+            
             if (manager != null)
             {
                 manager.TakeDamage(other.gameObject, damageAmount);

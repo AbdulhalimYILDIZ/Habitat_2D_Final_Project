@@ -16,7 +16,7 @@ public class Manager : MonoBehaviour
     public void TakeDamage(GameObject obj, int amount)
     {
         // Hasarı düşmanın canından düşür
-        hpMultiplier -= amount;
+        obj.GetComponent<enemy>().hp -= amount;
 
         // Eğer düşmanın canı 0 veya daha azsa, ölüm fonksiyonunu çağır
         if (obj.GetComponent<enemy>().hp <= 0)

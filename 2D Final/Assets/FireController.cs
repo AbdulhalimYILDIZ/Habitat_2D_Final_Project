@@ -49,7 +49,7 @@ public class FireController : MonoBehaviour
         {
             // Atış noktasında atış nesnesini etkinleştir ve konumunu ayarla
             projectile.SetActive(true);
-            projectile.GetComponent<Bullet>().onCall();
+            projectile.GetComponent<Bullet>().onCall(firePoint);
             projectile.transform.position = firePoint.position;
             projectile.transform.rotation = firePoint.rotation;
         }
